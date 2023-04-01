@@ -1,2 +1,2 @@
-# PDE_Solver_2D
-Some finite difference solver for PDEs in 2D
+Please compile with openmp: 
+g++ --std=c++17 -fopenmp .\src\*.cpp -o WaveEq2D.exe
