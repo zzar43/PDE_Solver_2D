@@ -99,25 +99,3 @@ void AcousticEq2D::Solve() {
         Res = P0.GetValue();
     }
 }
-
-// void AcousticEq2D::SaveSol(std::string savename) {
-//     std::fstream file;
-//     file.open(savename, std::ios_base::out);
-//     for (auto e : P0.GetValue().reshaped() ) {
-//         file << e << " ";
-//     }
-//     file.close();
-// }
-
-// void AcousticEq2D::SaveSolData(std::string savename, uint16_t step_t) {
-//     std::fstream file;
-//     file.open(savename, std::ios_base::out);
-//     for (int i = 0; i < Nt; i+=step_t)
-//     {
-//         for (auto e : SolData[i].reshaped()) {
-//             file << e << " ";
-//         }
-//         file << std::endl;
-//     }
-//     file.close();
-// }

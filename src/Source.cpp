@@ -81,6 +81,13 @@ PointSource2D::PointSource2D(const std::vector<Coor2D>& coor, const std::vector<
 
 // member function
 
+void PointSource2D::UpdatePML(uint16_t N_pml) {
+    for (int i = 0; i < source_coor.size(); i++)
+    {
+        source_coor[i] += N_pml;
+    }
+}
+
 uint16_t PointSource2D::GetSourceNum() {
     return N;
 }

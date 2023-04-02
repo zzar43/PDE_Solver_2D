@@ -21,6 +21,11 @@ struct Coor2D
     uint16_t Y() {
         return y;
     }
+    const Coor2D& operator+=(uint16_t N) {
+        x += N;
+        y += N;
+        return *this;
+    }
 };
 
 class PointSource2D
@@ -36,6 +41,8 @@ public:
     PointSource2D(const std::vector<Coor2D>& coor);
     PointSource2D(const std::vector<Coor2D>& coor, const VectorXd& fn);
     PointSource2D(const std::vector<Coor2D>& coor, const std::vector<VectorXd>& fn);
+
+    void UpdatePML(uint16_t N_pml);
 
     uint16_t GetSourceNum();
     Coor2D GetCoor(uint16_t source_idx);

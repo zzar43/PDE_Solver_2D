@@ -3,8 +3,8 @@
 
 #include "Eigen/Dense"
 #include "DiffGrid2D.h"
-#include "WaveEq2D.h"
-#include "AcousticEq2D.h"
+// #include "WaveEq2D.h"
+#include "AcousticEq2DPML.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -30,10 +30,11 @@ MatrixXd Gaussian2D(int Nx, int Ny, double dx, double dy, double sigma_x, double
 
 int main() {
 
-    AcousticEq2D model;
+    AcousticEq2DPML model;
 
     model.SetSpatial(201,201,0.005,0.005);
     model.SetTime(1001,0.0005);
+    model.SetPML(30,0.1);
     
     MatrixXd cc = MatrixXd::Ones(model.Nx, model.Ny);
     MatrixXd rho = MatrixXd::Ones(model.Nx, model.Ny);

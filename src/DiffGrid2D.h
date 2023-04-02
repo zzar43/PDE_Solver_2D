@@ -67,7 +67,7 @@ struct Model2D
     // PML functions
     void BuildSigmaPML();
     MatrixXd ExpandToPML(const MatrixXd& M);
-    MatrixXd ContractFromPML(const MatrixXd& M_pml);
+    MatrixXd ExtractFromPML(const MatrixXd& M_pml);
 
     // Print
     void PrintInfo();

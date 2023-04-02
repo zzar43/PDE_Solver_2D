@@ -196,8 +196,9 @@ MatrixXd Model2D::ExpandToPML(const MatrixXd& M) {
     return M_pml;
 }
 
-MatrixXd Model2D::ContractFromPML(const MatrixXd& M_pml) {
+MatrixXd Model2D::ExtractFromPML(const MatrixXd& M_pml) {
     MatrixXd M = MatrixXd::Zero(Nx, Ny);
+    #pragma omp parallel for collapse(2)
     for (int j = 0; j < Ny; j++)
     {
         for (int i = 0; i < Nx; i++)

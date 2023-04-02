@@ -13,22 +13,25 @@
 
 using Eigen::MatrixXd;
 
-class AcousticEq2DPML : public ModelAcousticEq2D
+class AcousticEq2DPML : public Model2D
 {
-    uint16_t N_PML;
-    double coef_PML;
-    DiffGrid2D Vx0, Vx1, Vy0, Vy1, P0, P1, Q0, Q1, R0, R1;
     bool Record;
-    std::vector<MatrixXd> SolData;
+    MatrixXd A, B, C, Rho, Vx_init, Vy_init, P_init;
+    PointSource2D source;
+    DiffGrid2D Vx0, Vx1, Vy0, Vy1, P0, P1, Q0, Q1, R0, R1;
 
 public:
     AcousticEq2DPML();
     ~AcousticEq2DPML() {}
+
+    void SetParameters(const MatrixXd& set_C, const MatrixXd& set_Rho);
+    void SetInit(const MatrixXd& set_Vx_init, const MatrixXd& set_Vy_init, const MatrixXd& set_P_init);
+    void SetSource(const PointSource2D& set_source);
     void SetRecord(bool r);
+
     void TimeUpdate(uint16_t idx_t);
     void Solve();
-    void SaveSol(std::string savename);
-    void SaveSolData(std::string savename, uint16_t step_t);
+
     MatrixXd GetSol() const;
 
 };
