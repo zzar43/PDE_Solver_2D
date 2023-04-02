@@ -41,8 +41,8 @@ int main() {
     MatrixXd vy = MatrixXd::Zero(model.Nx, model.Ny);
     MatrixXd pp = MatrixXd::Zero(model.Nx, model.Ny);
     // MatrixXd pp = Gaussian2D(model.Nx, model.Ny, model.hx, model.hy, 0.1, 0.1, 0.5, 0.5);
-    model.SetModel(cc, rho);
-    model.SetInit(vx,vy,pp);
+    model.SetParameters(cc, rho);
+    model.SetInit(vx, vy, pp);
 
     // source
     Coor2D c1(51,51);
@@ -68,7 +68,7 @@ int main() {
     cout << "Computation time: " << duration.count() << " milliseconds"<< endl;
 
     // record
-    model.SaveSol(".\\data\\sol.txt");
-    model.SaveSolData(".\\data\\solData.txt", 100);
+    model.SaveRes(".\\data\\sol.txt");
+    model.SaveAllRes(".\\data\\solData.txt", 100);
 
 }

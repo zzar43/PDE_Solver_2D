@@ -18,42 +18,28 @@
 
 using Eigen::MatrixXd;
 
-struct ModelAcousticEq2D
+class AcousticEq2D : public Model2D
 {
-    uint16_t Nx, Ny, Nt;
-    double hx, hy, tau;
+
+    bool Record;
     MatrixXd A, B, C, Rho, Vx_init, Vy_init, P_init;
     PointSource2D source;
-
-    // constructor
-    ModelAcousticEq2D();
-    ModelAcousticEq2D(uint16_t Nx, uint16_t Ny, uint16_t Nt, double hx, double hy, double tau, MatrixXd C, MatrixXd Rho, MatrixXd Vx_init, MatrixXd Vy_init, MatrixXd P_init)
-        : Nx(Nx), Ny(Ny), Nt(Nt), hx(hx), hy(hy), tau(tau), C(C), Rho(Rho), Vx_init(Vx_init), Vy_init(Vy_init), P_init(P_init) {}
-
-    // set model value
-    void SetSpatial(uint16_t set_Nx, uint16_t set_Ny, const double& set_hx, const double& set_hy);
-    void SetTime(uint16_t set_Nt, const double& set_tau);
-    void SetModel(const MatrixXd& set_C, const MatrixXd& set_Rho);
-    void SetInit(const MatrixXd& set_Vx_init, const MatrixXd& set_Vy_init, const MatrixXd& set_P_init);
-    void SetSource(const PointSource2D& set_source);
-    // no set boundary now, just use Dirichlet boundary condition
-
-    void PrintInfo() const;
-};
-
-class AcousticEq2D : public ModelAcousticEq2D
-{
     DiffGrid2D Vx0, Vx1, Vy0, Vy1, P0, P1;
-    bool Record;
-    std::vector<MatrixXd> SolData;
 
 public:
     AcousticEq2D();
     ~AcousticEq2D() {}
+
+    void SetParameters(const MatrixXd& set_C, const MatrixXd& set_Rho);
+    void SetInit(const MatrixXd& set_Vx_init, const MatrixXd& set_Vy_init, const MatrixXd& set_P_init);
+    void SetSource(const PointSource2D& set_source);
     void SetRecord(bool r);
+
     void TimeUpdate(uint16_t idx_t);
     void Solve();
+
     void SaveSol(std::string savename);
     void SaveSolData(std::string savename, uint16_t step_t);
+
     MatrixXd GetSol() const;
 };
