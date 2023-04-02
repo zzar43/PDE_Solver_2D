@@ -55,8 +55,8 @@ const MatrixXd& DiffGrid2D::GetValue() {
     return U;
 }
 
-// differential opeartor
-const MatrixXd& DiffGrid2D::dx() {
+// differential opeartor, forward and backward
+const MatrixXd& DiffGrid2D::dx_f() {
     #pragma omp parallel for collapse(2)
     for (int j = 1; j < U.cols()-1; j++)
     {
@@ -68,13 +68,37 @@ const MatrixXd& DiffGrid2D::dx() {
     return Ux;
 }
 
-const MatrixXd& DiffGrid2D::dy() {
+const MatrixXd& DiffGrid2D::dx_b() {
+    #pragma omp parallel for collapse(2)
+    for (int j = 1; j < U.cols()-1; j++)
+    {
+        for (int i = 1; i < U.rows()-1; i++)
+        {
+            Ux(i,j) = (U(i,j) - U(i-1,j)) / hx;
+        }
+    }
+    return Ux;
+}
+
+const MatrixXd& DiffGrid2D::dy_f() {
     #pragma omp parallel for collapse(2)
     for (int j = 1; j < U.cols()-1; j++)
     {
         for (int i = 1; i < U.rows()-1; i++)
         {
             Uy(i,j) = (U(i,j+1) - U(i,j)) / hy;
+        }
+    }
+    return Uy;
+}
+
+const MatrixXd& DiffGrid2D::dy_b() {
+    #pragma omp parallel for collapse(2)
+    for (int j = 1; j < U.cols()-1; j++)
+    {
+        for (int i = 1; i < U.rows()-1; i++)
+        {
+            Uy(i,j) = (U(i,j) - U(i,j-1)) / hy;
         }
     }
     return Uy;

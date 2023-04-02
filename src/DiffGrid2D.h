@@ -30,9 +30,13 @@ public:
     }
 
     // differential opeartor
-    const MatrixXd& dx();
+    const MatrixXd& dx_f();
 
-    const MatrixXd& dy();
+    const MatrixXd& dx_b();
+
+    const MatrixXd& dy_f();
+
+    const MatrixXd& dy_b();
 
     const MatrixXd& dxx();
 

@@ -4,6 +4,7 @@
 #include "Eigen/Dense"
 #include "DiffGrid2D.h"
 #include "WaveEq2D.h"
+#include "AcousticEq2D.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -11,17 +12,37 @@ using Eigen::VectorXd;
 using namespace std;
 using namespace chrono; 
 
+MatrixXd Gaussian2D(int Nx, int Ny, double dx, double dy, double sigma_x, double sigma_y, double center_x, double center_y) {
+    MatrixXd G(Nx, Ny);
+    double xi;
+    double yi;
+    for (int j = 0; j < Ny; j++)
+    {
+        for (int i = 0; i < Nx; i++)
+        {
+            xi = dx * i;
+            yi = dy * j;
+            G(i,j) = exp( -1 * ((xi-center_x)*(xi-center_x)/(2*sigma_x*sigma_x) + (yi-center_y)*(yi-center_y)/(2*sigma_y*sigma_y) ) );
+        }   
+    }
+    return G;
+}
+
 int main() {
 
-    WaveEq2D model;
+    AcousticEq2D model;
 
     model.SetSpatial(201,201,0.005,0.005);
-    model.SetTime(2001,0.0005);
+    model.SetTime(1001,0.0005);
     
     MatrixXd cc = MatrixXd::Ones(model.Nx, model.Ny);
-    MatrixXd uu = MatrixXd::Zero(model.Nx, model.Ny);
-    model.SetC(cc);
-    model.SetInit(uu);
+    MatrixXd rho = MatrixXd::Ones(model.Nx, model.Ny);
+    MatrixXd vx = MatrixXd::Zero(model.Nx, model.Ny);
+    MatrixXd vy = MatrixXd::Zero(model.Nx, model.Ny);
+    MatrixXd pp = MatrixXd::Zero(model.Nx, model.Ny);
+    // MatrixXd pp = Gaussian2D(model.Nx, model.Ny, model.hx, model.hy, 0.1, 0.1, 0.5, 0.5);
+    model.SetModel(cc, rho);
+    model.SetInit(vx,vy,pp);
 
     // source
     Coor2D c1(51,51);
@@ -34,8 +55,8 @@ int main() {
     VectorXd f3 = Sine1D(model.Nt, model.tau, 15);
     VectorXd f4 = Sine1D(model.Nt, model.tau, 20);
     vector<VectorXd> f{f1,f2,f3,f4};
-    PointSource2D pp(c, f);
-    model.SetSource(pp);
+    PointSource2D ptsource(c, f);
+    model.SetSource(ptsource);
 
     // solve
     model.SetRecord(true);

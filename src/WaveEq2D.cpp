@@ -1,10 +1,3 @@
-// Classic wave equation in 2D spatial space: \frac{1}{c^2} u_{tt} - \Delta u = f
-// Finite difference scheme, central difference in space
-
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
 #include "WaveEq2D.h"
 
 // model class
@@ -90,11 +83,11 @@ void WaveEq2D::TimeUpdate(uint16_t idx_t) {
         }
         U0.SetValue(U1.GetValue());
         U1.SetValue(U2.GetValue());
-
     }
 }
 
 void WaveEq2D::Solve() {
+
     LU = MatrixXd::Zero(Nx, Ny);
     U0 = DiffGrid2D(U_init, hx, hy);
     U1 = DiffGrid2D(Nx, Ny, hx, hy);

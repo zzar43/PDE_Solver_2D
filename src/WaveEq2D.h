@@ -1,5 +1,12 @@
 #pragma once
 
+// Classic wave equation in 2D spatial space: \frac{1}{c^2} u_{tt} - \Delta u = f
+// Finite difference scheme, central difference in space
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
 #include "Eigen/Dense"
 #include "DiffGrid2D.h"
 #include "Source.h"
@@ -24,7 +31,7 @@ struct ModelWaveEq2D
     void SetC(const MatrixXd& set_C);
     void SetInit(const MatrixXd& set_U_init);
     void SetSource(const PointSource2D& set_source);
-    // no set boundary now, just use 
+    // no set boundary now, just use Dirichlet boundary condition
 
     void PrintInfo() const;
 };
