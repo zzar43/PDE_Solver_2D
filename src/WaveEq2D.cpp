@@ -57,6 +57,7 @@ void WaveEq2D::TimeUpdate(uint16_t idx_t) {
         for (int i = 0; i < source.GetSourceNum(); i++)
         {
             U2.AddOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, tau*tau*source.GetValue(i, idx_t));
+            // U2.SetOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, tau*tau*source.GetValue(i, idx_t));
         }
         U0.SetValue(U1.GetValue());
         U1.SetValue(U2.GetValue());

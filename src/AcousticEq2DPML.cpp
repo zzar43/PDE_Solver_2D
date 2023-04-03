@@ -85,6 +85,7 @@ void AcousticEq2DPML::TimeUpdate(uint16_t idx_t) {
         for (int i = 0; i < source.GetSourceNum(); i++)
         {
             P1.AddOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, tau*source.GetValue(i, idx_t));
+            // P1.SetOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, tau*source.GetValue(i, idx_t));
         }
         Vx0.SetValue(Vx1.GetValue());
         Vy0.SetValue(Vy1.GetValue());

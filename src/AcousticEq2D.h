@@ -38,8 +38,5 @@ public:
     void TimeUpdate(uint16_t idx_t);
     void Solve();
 
-    void SaveSol(std::string savename);
-    void SaveSolData(std::string savename, uint16_t step_t);
-
     MatrixXd GetSol() const;
 };

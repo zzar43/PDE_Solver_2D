@@ -25,13 +25,13 @@ public:
     // value
 
     void SetValue(const MatrixXd& set_U);
-
     void Seth(const double set_hx, const double set_hy);
-
     const MatrixXd& GetValue();
-
     void AddOneEntry(uint16_t coor_x, uint16_t coor_y, double value) {
         U(coor_x, coor_y) += value;
+    }
+    void SetOneEntry(uint16_t coor_x, uint16_t coor_y, double value) {
+        U(coor_x, coor_y) = value;
     }
 
     // differential opeartor
