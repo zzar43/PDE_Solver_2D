@@ -19,9 +19,10 @@ Next:
 
 ## Demo:
 ### Convection-diffusion equation
-![](data\heat.png)
+<!-- ![](data\heat.png) -->
+![](https://raw.githubusercontent.com/zzar43/PDE_Solver_2D/main/data/heat.png)
 ### Maxwell's equations
-![](data\wave.png)
+![](https://raw.githubusercontent.com/zzar43/PDE_Solver_2D/main/data/wave.png)
 
 Check the Gifs in the data folder for fun.
 
