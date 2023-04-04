@@ -13,7 +13,6 @@
 #include "Eigen/Dense"
 #include "DiffGrid2D.h"
 #include "Source.h"
-#include "AcousticEq2D.h"
 
 using Eigen::MatrixXd;
 

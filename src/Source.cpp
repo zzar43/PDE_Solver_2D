@@ -3,6 +3,7 @@
 #include <vector>
 
 using Eigen::VectorXd;
+using Eigen::MatrixXd;
 
 // source function
 const double PI = atan(1.0)*4;
@@ -25,6 +26,22 @@ VectorXd Sine1D(int Nx, double dx, double omega) {
         res(i) = sin(2* PI * omega * xi);
     }
     return res;
+}
+
+MatrixXd Gaussian2D(int Nx, int Ny, double dx, double dy, double sigma_x, double sigma_y, double center_x, double center_y) {
+    MatrixXd G(Nx, Ny);
+    double xi;
+    double yi;
+    for (int j = 0; j < Ny; j++)
+    {
+        for (int i = 0; i < Nx; i++)
+        {
+            xi = dx * i;
+            yi = dy * j;
+            G(i,j) = exp( -1 * ((xi-center_x)*(xi-center_x)/(2*sigma_x*sigma_x) + (yi-center_y)*(yi-center_y)/(2*sigma_y*sigma_y) ) );
+        }   
+    }
+    return G;
 }
 
 // Coor2D structure

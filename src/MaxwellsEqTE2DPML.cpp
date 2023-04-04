@@ -1,6 +1,5 @@
 #include "MaxwellsEqTE2DPML.h"
 
-// acoustic wave equation with PML class
 
 // constructor
 MaxwellsEqTE2DPML::MaxwellsEqTE2DPML() {
@@ -111,30 +110,6 @@ void MaxwellsEqTE2DPML::TimeUpdate(uint16_t idx_t) {
         P0.SetValue(P1.GetValue());
         Q0.SetValue(Q1.GetValue());
         R0.SetValue(R1.GetValue());
-
-        // Ex1.SetValue(Ex0.GetValue() + tau*B.cwiseProduct(Hz0.dy_f()) - tau*Eps.cwiseProduct(sigmaX.cwiseProduct(Ex0.GetValue())));
-
-        // Ey1.SetValue(Ey0.GetValue() + tau*B.cwiseProduct(Hz0.dx_f()) - tau*Eps.cwiseProduct(sigmaY.cwiseProduct(Ey0.GetValue())));
-
-        // Q1.SetValue(Q0.GetValue() + tau * Eps.cwiseProduct(Ey0.GetValue()));
-
-        // R1.SetValue(R0.GetValue() + tau * Eps.cwiseProduct(Ex0.GetValue()));
-
-        // Hz1.SetValue(Hz0.GetValue() 
-        //     + tau * A.cwiseProduct(Ex1.dy_b() + Ey1.dx_b() + sigmaX.cwiseProduct(Q0.dy_b()) + sigmaY.cwiseProduct(R0.dx_b())) 
-        //     - tau * Eps.cwiseProduct(Hz0.GetValue().cwiseProduct(sigmaX+sigmaY))
-        //     );
-        // // source
-        // for (int i = 0; i < source.GetSourceNum(); i++)
-        // {
-        //     Hz1.AddOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, tau*source.GetValue(i, idx_t));
-        //     // Hz1.SetOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, tau*source.GetValue(i, idx_t));
-        // }
-        // Ex0.SetValue(Ex1.GetValue());
-        // Ey0.SetValue(Ey1.GetValue());
-        // Q0.SetValue(Q1.GetValue());
-        // R0.SetValue(R1.GetValue());
-        // Hz0.SetValue(Hz1.GetValue());
 
     }
 }

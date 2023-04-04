@@ -5,10 +5,12 @@
 #include "Eigen/Dense"
 
 using Eigen::VectorXd;
+using Eigen::MatrixXd;
 
 // source function
 VectorXd Gaussian1D(int Nx, double dx, double sigma, double center);
 VectorXd Sine1D(int Nx, double dx, double omega);
+MatrixXd Gaussian2D(int Nx, int Ny, double dx, double dy, double sigma_x, double sigma_y, double center_x, double center_y);
 
 struct Coor2D
 {
