@@ -40,7 +40,7 @@ void ConvDiffEq2D::SetRecord(bool r) {
 
 // solver
 
-void ConvDiffEq2D::TimeUpdate(uint16_t idx_t) {
+void ConvDiffEq2D::TimeUpdate(int idx_t) {
 
     if (source.GetSourceNum() == 0) {
 
@@ -74,7 +74,7 @@ void ConvDiffEq2D::TimeUpdate(uint16_t idx_t) {
         for (int i = 0; i < source.GetSourceNum(); i++)
         {
             // U1.AddOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, tau*source.GetValue(i, idx_t));
-            U1.SetOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, tau*source.GetValue(i, idx_t));
+            U1.SetOneEntry(source.GetCoor(i).x, source.GetCoor(i).y, source.GetValue(i, idx_t));
         }
 
         U0.SetValue(U1.GetValue());

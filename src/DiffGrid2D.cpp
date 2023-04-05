@@ -11,7 +11,7 @@ DiffGrid2D::DiffGrid2D() {
     Uyy = MatrixXf();
 }
 
-DiffGrid2D::DiffGrid2D(uint16_t Nx, uint16_t Ny, double hx, double hy) : hx(hx), hy(hy)
+DiffGrid2D::DiffGrid2D(int Nx, int Ny, double hx, double hy) : hx(hx), hy(hy)
 {
     U = MatrixXf::Zero(Nx, Ny);
     Ux = MatrixXf::Zero(Nx, Ny);
@@ -144,19 +144,19 @@ Model2D::Model2D() {
     coef_pml = 1.;
 }
 
-void Model2D::SetSpatial(uint16_t set_Nx, uint16_t set_Ny, const double& set_hx, const double& set_hy) {
+void Model2D::SetSpatial(int set_Nx, int set_Ny, const double& set_hx, const double& set_hy) {
     Nx = set_Nx;
     Ny = set_Ny;
     hx = set_hx;
     hy = set_hy;
 }
 
-void Model2D::SetTime(uint16_t set_Nt, const double& set_tau) {
+void Model2D::SetTime(int set_Nt, const double& set_tau) {
     Nt = set_Nt;
     tau = set_tau;
 }
 
-void Model2D::SetPML(uint16_t set_N_pml, const double& set_coef_pml) {
+void Model2D::SetPML(int set_N_pml, const double& set_coef_pml) {
     N_pml = set_N_pml;
     coef_pml = set_coef_pml;
 }
@@ -215,10 +215,16 @@ void Model2D::PrintInfo() {
     std::cout << "Nx = " << Nx << ", Ny = " << Ny << std::endl;
     std::cout << "hx = " << hx << ", hy = " << hy << std::endl;
     std::cout << "Nt = " << Nt << ", tau = " << tau << std::endl;
-    std::cout << "N_pml = " << N_pml << ", coef_pml = " << coef_pml << std::endl;
+    std::cout << "Total time: " << Nt * tau << " s" << std::endl;
+    if (N_pml != 0) {
+        std::cout << "N_pml = " << N_pml << ", coef_pml = " << coef_pml << std::endl;
+    }
 }
 
-// save
+// save: do not optimize with O1, O2, or O3. will bypass the fstream file operation.
+#pragma GCC push_options
+#pragma GCC optimize("O0")
+
 void Model2D::SaveRes(std::string savename) {
     std::fstream file;
     file.open(savename, std::ios_base::out);
@@ -228,7 +234,7 @@ void Model2D::SaveRes(std::string savename) {
     file.close();
 }
 
-void Model2D::SaveAllRes(std::string savename, uint16_t step_t) {
+void Model2D::SaveAllRes(std::string savename, int step_t) {
     std::fstream file;
     file.open(savename, std::ios_base::out);
     for (int i = 0; i < Nt; i+=step_t)
@@ -240,3 +246,5 @@ void Model2D::SaveAllRes(std::string savename, uint16_t step_t) {
     }
     file.close();
 }
+
+#pragma GCC pop_options

@@ -29,7 +29,7 @@ public:
     void SetSource(const PointSource2D& set_source);
     void SetRecord(bool r);
 
-    void TimeUpdate(uint16_t idx_t);
+    void TimeUpdate(int idx_t);
     void Solve();
 
     MatrixXf GetSol() const;

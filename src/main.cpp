@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <fstream>
 
 #include "Eigen/Dense"
 #include "DiffGrid2D.h"
@@ -14,13 +15,26 @@ using Eigen::VectorXf;
 using namespace std;
 using namespace chrono; 
 
+void NewSave(std::vector<MatrixXf> AllRes, std::string savename, int step_t) {
+    std::fstream file;
+    file.open(savename, std::ios_base::out);
+    for (int i = 0; i < AllRes.size(); i+=step_t)
+    {
+        std::cout << "saving." << i << std::endl;
+        for (auto e : AllRes[i].reshaped()) {
+            file << e << " ";
+        }
+        file << std::endl;
+    }
+    file.close();
+}
 
 int main() {
 
-    // Convection-diffusion equation
     int sw = 1;
 
-    if (!sw) {
+    // Convection-diffusion equation
+    if (sw == 0) {
         ConvDiffEq2D model1;
 
         // spatial and time
@@ -71,7 +85,7 @@ int main() {
     }
 
     // Maxwell's equations in 2D, transverse electric (TE) mode
-    if (sw) {
+    if (sw == 1) {
 
         MaxwellsEqTE2DPML model2;
 

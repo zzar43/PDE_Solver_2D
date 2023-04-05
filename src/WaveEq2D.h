@@ -20,7 +20,6 @@ class WaveEq2D : public Model2D
     MatrixXf LU, C, C2, U_init;
     DiffGrid2D U0, U1, U2;
     PointSource2D source;
-    // std::vector<MatrixXf> SolData;
 
 public:
     WaveEq2D();
@@ -30,6 +29,6 @@ public:
     void SetSource(const PointSource2D& set_source);
     void SetRecord(bool r);
     void EvalLU(DiffGrid2D& U);
-    void TimeUpdate(uint16_t idx_t);
+    void TimeUpdate(int idx_t);
     void Solve();
 };

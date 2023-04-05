@@ -13,7 +13,8 @@ g++ --std=c++17 -fopenmp -O3 .\src\*.cpp -o Solver.exe
 
 Next:
 - Improve computing efficiency by improving OpenMP code.
-- Dedicated vector and matrix container.
+- Update DiffGrid2D class.
+- Add a boundary condition class.
 - Build Python interfaces for PDE-constrained optimization work.
 - Parallel with Cuda (maybe for another project).
 

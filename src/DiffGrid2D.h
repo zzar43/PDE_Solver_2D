@@ -17,7 +17,7 @@ class DiffGrid2D
     MatrixXf U, Ux, Uy, Uxx, Uyy;
 public:
     DiffGrid2D();
-    DiffGrid2D(uint16_t Nx, uint16_t Ny, double hx, double hy);
+    DiffGrid2D(int Nx, int Ny, double hx, double hy);
     DiffGrid2D(const MatrixXf& U, double hx, double hy);
     DiffGrid2D(const DiffGrid2D& set_DiffGrid2D);
     ~DiffGrid2D();
@@ -27,10 +27,10 @@ public:
     void SetValue(const MatrixXf& set_U);
     void Seth(const double set_hx, const double set_hy);
     const MatrixXf& GetValue();
-    void AddOneEntry(uint16_t coor_x, uint16_t coor_y, double value) {
+    void AddOneEntry(int coor_x, int coor_y, double value) {
         U(coor_x, coor_y) += value;
     }
-    void SetOneEntry(uint16_t coor_x, uint16_t coor_y, double value) {
+    void SetOneEntry(int coor_x, int coor_y, double value) {
         U(coor_x, coor_y) = value;
     }
 
@@ -48,7 +48,7 @@ public:
 // a general 2D model class for defining basic parameters
 struct Model2D
 {
-    uint16_t Nx, Ny, N_pml, Nt;
+    int Nx, Ny, N_pml, Nt;
     double hx, hy, tau, coef_pml;
     MatrixXf sigmaX, sigmaY;
     // save result
@@ -60,9 +60,9 @@ struct Model2D
     
     // member functions
     // set values
-    void SetSpatial(uint16_t set_Nx, uint16_t set_Ny, const double& set_hx, const double& set_hy);
-    void SetTime(uint16_t set_Nt, const double& set_tau);
-    void SetPML(uint16_t set_N_pml, const double& set_coef_pml);
+    void SetSpatial(int set_Nx, int set_Ny, const double& set_hx, const double& set_hy);
+    void SetTime(int set_Nt, const double& set_tau);
+    void SetPML(int set_N_pml, const double& set_coef_pml);
 
     // PML functions
     void BuildSigmaPML();
@@ -74,6 +74,7 @@ struct Model2D
 
     // save
     void SaveRes(std::string savename);
-    void SaveAllRes(std::string savename, uint16_t step_t);
+    void SaveAllRes(std::string savename, int step_t);
+    const std::vector<MatrixXf>& GetAllRes() { return AllRes; }
 
 };

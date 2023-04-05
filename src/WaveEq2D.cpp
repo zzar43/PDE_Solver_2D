@@ -42,7 +42,7 @@ void WaveEq2D::EvalLU(DiffGrid2D& U) {
     LU = C2.cwiseProduct(U.dxx() + U.dyy());
 }
 
-void WaveEq2D::TimeUpdate(uint16_t idx_t) {
+void WaveEq2D::TimeUpdate(int idx_t) {
     if (source.GetSourceNum() == 0) {
 
         EvalLU(U1);

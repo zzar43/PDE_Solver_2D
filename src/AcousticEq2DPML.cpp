@@ -53,7 +53,7 @@ void AcousticEq2DPML::SetRecord(bool r) {
 }
 
 // solve
-void AcousticEq2DPML::TimeUpdate(uint16_t idx_t) {
+void AcousticEq2DPML::TimeUpdate(int idx_t) {
 
     if (source.GetSourceNum() == 0) {
 

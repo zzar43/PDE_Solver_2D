@@ -45,7 +45,7 @@ void AcousticEq2D::SetRecord(bool r) {
     Record = r;
 }
 
-void AcousticEq2D::TimeUpdate(uint16_t idx_t) {
+void AcousticEq2D::TimeUpdate(int idx_t) {
 
     if (source.GetSourceNum() == 0) {
 

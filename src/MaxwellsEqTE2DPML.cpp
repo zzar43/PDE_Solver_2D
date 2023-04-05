@@ -54,7 +54,7 @@ void MaxwellsEqTE2DPML::SetRecord(bool r) {
 }
 
 // solve
-void MaxwellsEqTE2DPML::TimeUpdate(uint16_t idx_t) {
+void MaxwellsEqTE2DPML::TimeUpdate(int idx_t) {
 
     if (source.GetSourceNum() == 0) {
 

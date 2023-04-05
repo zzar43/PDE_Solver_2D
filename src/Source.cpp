@@ -56,12 +56,12 @@ PointSource2D::PointSource2D() : N(0) {
     source_fn.reserve(N);
 }
 
-PointSource2D::PointSource2D(uint16_t coor_x, uint16_t coor_y): N(1) {
+PointSource2D::PointSource2D(int coor_x, int coor_y): N(1) {
     source_coor.push_back(Coor2D(coor_x, coor_y));
     source_fn.push_back(VectorXf::Zero(1));
 }
 
-PointSource2D::PointSource2D(uint16_t coor_x, uint16_t coor_y, const VectorXf& fn): N(1) {
+PointSource2D::PointSource2D(int coor_x, int coor_y, const VectorXf& fn): N(1) {
     source_coor.push_back(Coor2D(coor_x, coor_y));
     source_fn.push_back(fn);
 }
@@ -98,24 +98,24 @@ PointSource2D::PointSource2D(const std::vector<Coor2D>& coor, const std::vector<
 
 // member function
 
-void PointSource2D::UpdatePML(uint16_t N_pml) {
+void PointSource2D::UpdatePML(int N_pml) {
     for (int i = 0; i < source_coor.size(); i++)
     {
         source_coor[i] += N_pml;
     }
 }
 
-uint16_t PointSource2D::GetSourceNum() {
+int PointSource2D::GetSourceNum() {
     return N;
 }
 
-Coor2D PointSource2D::GetCoor(uint16_t source_idx) {
+Coor2D PointSource2D::GetCoor(int source_idx) {
     return source_coor[source_idx];
 }
-VectorXf PointSource2D::GetFn(uint16_t source_idx) {
+VectorXf PointSource2D::GetFn(int source_idx) {
     return source_fn[source_idx];
 }
-double PointSource2D::GetValue(uint16_t source_idx, uint16_t time_idx) {
+double PointSource2D::GetValue(int source_idx, int time_idx) {
     return source_fn[source_idx][time_idx];
 }
 
