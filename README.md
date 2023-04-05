@@ -8,7 +8,7 @@ Features:
 
 Please compile it with openmp: 
 ```
-g++ --std=c++17 -fopenmp .\src\*.cpp -o Solver.exe
+g++ --std=c++17 -fopenmp -O3 .\src\*.cpp -o Solver.exe
 ```
 
 Next:

@@ -14,12 +14,12 @@
 #include "DiffGrid2D.h"
 #include "Source.h"
 
-using Eigen::MatrixXd;
+using Eigen::MatrixXf;
 
 class MaxwellsEqTE2DPML : public Model2D
 {
     bool Record;
-    MatrixXd A, B, Eps, Mu, Ex_init, Ey_init, Hz_init;
+    MatrixXf A, B, Eps, Mu, Ex_init, Ey_init, Hz_init;
     PointSource2D source;
     DiffGrid2D Ex0, Ex1, Ey0, Ey1, Hz0, Hz1, P0, P1, Q0, Q1, R0, R1;
 
@@ -27,14 +27,14 @@ public:
     MaxwellsEqTE2DPML();
     ~MaxwellsEqTE2DPML() {}
 
-    void SetParameters(const MatrixXd& set_Eps, const MatrixXd& set_Mu);
-    void SetInit(const MatrixXd& set_Ex_init, const MatrixXd& set_Ey_init, const MatrixXd& set_Hz_init);
+    void SetParameters(const MatrixXf& set_Eps, const MatrixXf& set_Mu);
+    void SetInit(const MatrixXf& set_Ex_init, const MatrixXf& set_Ey_init, const MatrixXf& set_Hz_init);
     void SetSource(const PointSource2D& set_source);
     void SetRecord(bool r);
 
     void TimeUpdate(uint16_t idx_t);
     void Solve();
 
-    MatrixXd GetSol() const;
+    MatrixXf GetSol() const;
 
 };

@@ -1,32 +1,32 @@
 #include "DiffGrid2D.h"
 
-using Eigen::MatrixXd;
+using Eigen::MatrixXf;
 
 DiffGrid2D::DiffGrid2D() {
     hx = hy = 0.;
-    U = MatrixXd();
-    Ux = MatrixXd();
-    Uy = MatrixXd();
-    Uxx = MatrixXd();
-    Uyy = MatrixXd();
+    U = MatrixXf();
+    Ux = MatrixXf();
+    Uy = MatrixXf();
+    Uxx = MatrixXf();
+    Uyy = MatrixXf();
 }
 
 DiffGrid2D::DiffGrid2D(uint16_t Nx, uint16_t Ny, double hx, double hy) : hx(hx), hy(hy)
 {
-    U = MatrixXd::Zero(Nx, Ny);
-    Ux = MatrixXd::Zero(Nx, Ny);
-    Uy = MatrixXd::Zero(Nx, Ny);
-    Uxx = MatrixXd::Zero(Nx, Ny);
-    Uyy = MatrixXd::Zero(Nx, Ny);
+    U = MatrixXf::Zero(Nx, Ny);
+    Ux = MatrixXf::Zero(Nx, Ny);
+    Uy = MatrixXf::Zero(Nx, Ny);
+    Uxx = MatrixXf::Zero(Nx, Ny);
+    Uyy = MatrixXf::Zero(Nx, Ny);
 }
 
-DiffGrid2D::DiffGrid2D(const MatrixXd& set_U, double hx, double hy) : hx(hx), hy(hy)
+DiffGrid2D::DiffGrid2D(const MatrixXf& set_U, double hx, double hy) : hx(hx), hy(hy)
 {
     U = set_U;
-    Ux = MatrixXd::Zero(U.rows(), U.cols());
-    Uy = MatrixXd::Zero(U.rows(), U.cols());
-    Uxx = MatrixXd::Zero(U.rows(), U.cols());
-    Uyy = MatrixXd::Zero(U.rows(), U.cols());
+    Ux = MatrixXf::Zero(U.rows(), U.cols());
+    Uy = MatrixXf::Zero(U.rows(), U.cols());
+    Uxx = MatrixXf::Zero(U.rows(), U.cols());
+    Uyy = MatrixXf::Zero(U.rows(), U.cols());
 }
 
 DiffGrid2D::DiffGrid2D(const DiffGrid2D& set_DiffGrid2D) {
@@ -41,7 +41,7 @@ DiffGrid2D::DiffGrid2D(const DiffGrid2D& set_DiffGrid2D) {
 
 DiffGrid2D::~DiffGrid2D() {}
 
-void DiffGrid2D::SetValue(const MatrixXd& set_U) {
+void DiffGrid2D::SetValue(const MatrixXf& set_U) {
     U = set_U;
 }
 
@@ -50,12 +50,12 @@ void DiffGrid2D::Seth(const double set_hx, const double set_hy) {
     hy = set_hy;
 }
 
-const MatrixXd& DiffGrid2D::GetValue() {
+const MatrixXf& DiffGrid2D::GetValue() {
     return U;
 }
 
 // differential opeartor, forward and backward
-const MatrixXd& DiffGrid2D::dx_f() {
+const MatrixXf& DiffGrid2D::dx_f() {
     #pragma omp parallel for collapse(2)
     for (int j = 1; j < U.cols()-1; j++)
     {
@@ -67,7 +67,7 @@ const MatrixXd& DiffGrid2D::dx_f() {
     return Ux;
 }
 
-const MatrixXd& DiffGrid2D::dx_b() {
+const MatrixXf& DiffGrid2D::dx_b() {
     #pragma omp parallel for collapse(2)
     for (int j = 1; j < U.cols()-1; j++)
     {
@@ -79,7 +79,7 @@ const MatrixXd& DiffGrid2D::dx_b() {
     return Ux;
 }
 
-const MatrixXd& DiffGrid2D::dy_f() {
+const MatrixXf& DiffGrid2D::dy_f() {
     #pragma omp parallel for collapse(2)
     for (int j = 1; j < U.cols()-1; j++)
     {
@@ -91,7 +91,7 @@ const MatrixXd& DiffGrid2D::dy_f() {
     return Uy;
 }
 
-const MatrixXd& DiffGrid2D::dy_b() {
+const MatrixXf& DiffGrid2D::dy_b() {
     #pragma omp parallel for collapse(2)
     for (int j = 1; j < U.cols()-1; j++)
     {
@@ -103,7 +103,7 @@ const MatrixXd& DiffGrid2D::dy_b() {
     return Uy;
 }
 
-const MatrixXd& DiffGrid2D::dxx() {
+const MatrixXf& DiffGrid2D::dxx() {
     #pragma omp parallel for collapse(2)
     for (int j = 1; j < U.cols()-1; j++)
     {
@@ -115,7 +115,7 @@ const MatrixXd& DiffGrid2D::dxx() {
     return Uxx;
 }
 
-const MatrixXd& DiffGrid2D::dyy() {
+const MatrixXf& DiffGrid2D::dyy() {
     #pragma omp parallel for collapse(2)
     for (int j = 1; j < U.cols()-1; j++)
     {
@@ -162,8 +162,8 @@ void Model2D::SetPML(uint16_t set_N_pml, const double& set_coef_pml) {
 }
 
 void Model2D::BuildSigmaPML() {
-    sigmaX = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
-    sigmaY = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
+    sigmaX = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
+    sigmaY = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
     for (int i = 0; i < N_pml; i++)
     {
         sigmaX.row(N_pml-1-i).setConstant(i*i*coef_pml);
@@ -174,8 +174,8 @@ void Model2D::BuildSigmaPML() {
     }
 }
 
-MatrixXd Model2D::ExpandToPML(const MatrixXd& M) {
-    MatrixXd M_pml = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
+MatrixXf Model2D::ExpandToPML(const MatrixXf& M) {
+    MatrixXf M_pml = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
     for (int j = 0; j < Ny; j++)
     {
         for (int i = 0; i < Nx; i++)
@@ -196,8 +196,8 @@ MatrixXd Model2D::ExpandToPML(const MatrixXd& M) {
     return M_pml;
 }
 
-MatrixXd Model2D::ExtractFromPML(const MatrixXd& M_pml) {
-    MatrixXd M = MatrixXd::Zero(Nx, Ny);
+MatrixXf Model2D::ExtractFromPML(const MatrixXf& M_pml) {
+    MatrixXf M = MatrixXf::Zero(Nx, Ny);
     #pragma omp parallel for collapse(2)
     for (int j = 0; j < Ny; j++)
     {

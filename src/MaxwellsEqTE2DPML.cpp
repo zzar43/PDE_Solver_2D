@@ -5,14 +5,14 @@
 MaxwellsEqTE2DPML::MaxwellsEqTE2DPML() {
     Record = false;
 
-    Eps = MatrixXd::Ones(Nx+2*N_pml, Ny+2*N_pml);
-    Mu = MatrixXd::Ones(Nx+2*N_pml, Ny+2*N_pml);
+    Eps = MatrixXf::Ones(Nx+2*N_pml, Ny+2*N_pml);
+    Mu = MatrixXf::Ones(Nx+2*N_pml, Ny+2*N_pml);
     A = Mu.cwiseInverse();
     B = Eps.cwiseInverse();
 
-    Ex_init = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
-    Ey_init = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
-    Hz_init = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
+    Ex_init = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
+    Ey_init = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
+    Hz_init = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
 
     source = PointSource2D();
 
@@ -31,14 +31,14 @@ MaxwellsEqTE2DPML::MaxwellsEqTE2DPML() {
 }
 
 // member functions
-void MaxwellsEqTE2DPML::SetParameters(const MatrixXd& set_Eps, const MatrixXd& set_Mu) {
+void MaxwellsEqTE2DPML::SetParameters(const MatrixXf& set_Eps, const MatrixXf& set_Mu) {
     Eps = ExpandToPML(set_Eps);
     Mu = ExpandToPML(set_Mu);
     A = Mu.cwiseInverse();
     B = Eps.cwiseInverse();
 }
 
-void MaxwellsEqTE2DPML::SetInit(const MatrixXd& set_Vx_init, const MatrixXd& set_Vy_init, const MatrixXd& set_P_init) {
+void MaxwellsEqTE2DPML::SetInit(const MatrixXf& set_Vx_init, const MatrixXf& set_Vy_init, const MatrixXf& set_P_init) {
     Ex_init = ExpandToPML(set_Vx_init);
     Ey_init = ExpandToPML(set_Vy_init);
     Hz_init = ExpandToPML(set_P_init);

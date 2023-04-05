@@ -16,13 +16,13 @@
 #include "DiffGrid2D.h"
 #include "Source.h"
 
-using Eigen::MatrixXd;
+using Eigen::MatrixXf;
 
 class AcousticEq2D : public Model2D
 {
 
     bool Record;
-    MatrixXd A, B, C, Rho, Vx_init, Vy_init, P_init;
+    MatrixXf A, B, C, Rho, Vx_init, Vy_init, P_init;
     PointSource2D source;
     DiffGrid2D Vx0, Vx1, Vy0, Vy1, P0, P1;
 
@@ -30,13 +30,13 @@ public:
     AcousticEq2D();
     ~AcousticEq2D() {}
 
-    void SetParameters(const MatrixXd& set_C, const MatrixXd& set_Rho);
-    void SetInit(const MatrixXd& set_Vx_init, const MatrixXd& set_Vy_init, const MatrixXd& set_P_init);
+    void SetParameters(const MatrixXf& set_C, const MatrixXf& set_Rho);
+    void SetInit(const MatrixXf& set_Vx_init, const MatrixXf& set_Vy_init, const MatrixXf& set_P_init);
     void SetSource(const PointSource2D& set_source);
     void SetRecord(bool r);
 
     void TimeUpdate(uint16_t idx_t);
     void Solve();
 
-    MatrixXd GetSol() const;
+    MatrixXf GetSol() const;
 };

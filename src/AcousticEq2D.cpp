@@ -5,14 +5,14 @@
 AcousticEq2D::AcousticEq2D() {
     Record = false;
 
-    C = MatrixXd::Ones(Nx, Ny);
-    Rho = MatrixXd::Ones(Nx, Ny);
+    C = MatrixXf::Ones(Nx, Ny);
+    Rho = MatrixXf::Ones(Nx, Ny);
     A = -1. * Rho.cwiseInverse();
     B = -1. * Rho.cwiseProduct(C.cwiseProduct(C));
 
-    Vx_init = MatrixXd::Zero(Nx, Ny);
-    Vy_init = MatrixXd::Zero(Nx, Ny);
-    P_init = MatrixXd::Zero(Nx, Ny);
+    Vx_init = MatrixXf::Zero(Nx, Ny);
+    Vy_init = MatrixXf::Zero(Nx, Ny);
+    P_init = MatrixXf::Zero(Nx, Ny);
 
     source = PointSource2D();
 
@@ -24,14 +24,14 @@ AcousticEq2D::AcousticEq2D() {
     P1 = DiffGrid2D(Nx, Ny, hx, hy);
 }
 
-void AcousticEq2D::SetParameters(const MatrixXd& set_C, const MatrixXd& set_Rho) {
+void AcousticEq2D::SetParameters(const MatrixXf& set_C, const MatrixXf& set_Rho) {
     C = set_C;
     Rho = set_Rho;
     A = -1. * Rho.cwiseInverse();
     B = -1. * Rho.cwiseProduct(C.cwiseProduct(C));
 }
 
-void AcousticEq2D::SetInit(const MatrixXd& set_Vx_init, const MatrixXd& set_Vy_init, const MatrixXd& set_P_init) {
+void AcousticEq2D::SetInit(const MatrixXf& set_Vx_init, const MatrixXf& set_Vy_init, const MatrixXf& set_P_init) {
     Vx_init = set_Vx_init;
     Vy_init = set_Vy_init;
     P_init = set_P_init;

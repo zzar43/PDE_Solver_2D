@@ -6,14 +6,14 @@
 AcousticEq2DPML::AcousticEq2DPML() {
     Record = false;
 
-    C = MatrixXd::Ones(Nx+2*N_pml, Ny+2*N_pml);
-    Rho = MatrixXd::Ones(Nx+2*N_pml, Ny+2*N_pml);
+    C = MatrixXf::Ones(Nx+2*N_pml, Ny+2*N_pml);
+    Rho = MatrixXf::Ones(Nx+2*N_pml, Ny+2*N_pml);
     A = -1. * Rho.cwiseInverse();
     B = -1. * Rho.cwiseProduct(C.cwiseProduct(C));
 
-    Vx_init = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
-    Vy_init = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
-    P_init = MatrixXd::Zero(Nx+2*N_pml, Ny+2*N_pml);
+    Vx_init = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
+    Vy_init = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
+    P_init = MatrixXf::Zero(Nx+2*N_pml, Ny+2*N_pml);
 
     source = PointSource2D();
 
@@ -30,14 +30,14 @@ AcousticEq2DPML::AcousticEq2DPML() {
 }
 
 // member functions
-void AcousticEq2DPML::SetParameters(const MatrixXd& set_C, const MatrixXd& set_Rho) {
+void AcousticEq2DPML::SetParameters(const MatrixXf& set_C, const MatrixXf& set_Rho) {
     C = ExpandToPML(set_C);
     Rho = ExpandToPML(set_Rho);
     A = -1. * Rho.cwiseInverse();
     B = -1. * Rho.cwiseProduct(C.cwiseProduct(C));
 }
 
-void AcousticEq2DPML::SetInit(const MatrixXd& set_Vx_init, const MatrixXd& set_Vy_init, const MatrixXd& set_P_init) {
+void AcousticEq2DPML::SetInit(const MatrixXf& set_Vx_init, const MatrixXf& set_Vy_init, const MatrixXf& set_P_init) {
     Vx_init = ExpandToPML(set_Vx_init);
     Vy_init = ExpandToPML(set_Vy_init);
     P_init = ExpandToPML(set_P_init);

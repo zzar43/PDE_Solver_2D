@@ -5,10 +5,10 @@
 WaveEq2D::WaveEq2D() {
     Record = false;
 
-    LU = MatrixXd::Zero(Nx, Ny);
-    C = MatrixXd::Ones(Nx, Ny);
-    C2 = MatrixXd::Ones(Nx, Ny);
-    U_init = MatrixXd::Zero(Nx, Ny);
+    LU = MatrixXf::Zero(Nx, Ny);
+    C = MatrixXf::Ones(Nx, Ny);
+    C2 = MatrixXf::Ones(Nx, Ny);
+    U_init = MatrixXf::Zero(Nx, Ny);
 
     source = PointSource2D();
 
@@ -17,12 +17,12 @@ WaveEq2D::WaveEq2D() {
     U2 = DiffGrid2D(Nx, Ny, hx, hy);
 }
 
-void WaveEq2D::SetParameters(const MatrixXd& set_C) {
+void WaveEq2D::SetParameters(const MatrixXf& set_C) {
     C = set_C;
     C2 = C.cwiseProduct(C);
 }
 
-void WaveEq2D::SetInit(const MatrixXd& set_U_init) {
+void WaveEq2D::SetInit(const MatrixXf& set_U_init) {
     U_init = set_U_init;
     U0.SetValue(U_init);
     U1.SetValue(U_init);
@@ -66,7 +66,7 @@ void WaveEq2D::TimeUpdate(uint16_t idx_t) {
 
 void WaveEq2D::Solve() {
 
-    LU = MatrixXd::Zero(Nx, Ny);
+    LU = MatrixXf::Zero(Nx, Ny);
     U0 = DiffGrid2D(U_init, hx, hy);
     U1 = DiffGrid2D(Nx, Ny, hx, hy);
     U2 = DiffGrid2D(Nx, Ny, hx, hy);

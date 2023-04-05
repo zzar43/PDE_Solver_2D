@@ -8,25 +8,25 @@
 #include "omp.h"
 #include "Eigen/Dense"
 
-using Eigen::MatrixXd;
+using Eigen::MatrixXf;
 
 class DiffGrid2D
 {
     double hx;
     double hy;
-    MatrixXd U, Ux, Uy, Uxx, Uyy;
+    MatrixXf U, Ux, Uy, Uxx, Uyy;
 public:
     DiffGrid2D();
     DiffGrid2D(uint16_t Nx, uint16_t Ny, double hx, double hy);
-    DiffGrid2D(const MatrixXd& U, double hx, double hy);
+    DiffGrid2D(const MatrixXf& U, double hx, double hy);
     DiffGrid2D(const DiffGrid2D& set_DiffGrid2D);
     ~DiffGrid2D();
 
     // value
 
-    void SetValue(const MatrixXd& set_U);
+    void SetValue(const MatrixXf& set_U);
     void Seth(const double set_hx, const double set_hy);
-    const MatrixXd& GetValue();
+    const MatrixXf& GetValue();
     void AddOneEntry(uint16_t coor_x, uint16_t coor_y, double value) {
         U(coor_x, coor_y) += value;
     }
@@ -35,12 +35,12 @@ public:
     }
 
     // differential opeartor
-    const MatrixXd& dx_f();
-    const MatrixXd& dx_b();
-    const MatrixXd& dy_f();
-    const MatrixXd& dy_b();
-    const MatrixXd& dxx();
-    const MatrixXd& dyy();
+    const MatrixXf& dx_f();
+    const MatrixXf& dx_b();
+    const MatrixXf& dy_f();
+    const MatrixXf& dy_b();
+    const MatrixXf& dxx();
+    const MatrixXf& dyy();
 
     void PrintShape();
 };
@@ -50,10 +50,10 @@ struct Model2D
 {
     uint16_t Nx, Ny, N_pml, Nt;
     double hx, hy, tau, coef_pml;
-    MatrixXd sigmaX, sigmaY;
+    MatrixXf sigmaX, sigmaY;
     // save result
-    MatrixXd Res;
-    std::vector<MatrixXd> AllRes;
+    MatrixXf Res;
+    std::vector<MatrixXf> AllRes;
 
     // constructor
     Model2D();
@@ -66,8 +66,8 @@ struct Model2D
 
     // PML functions
     void BuildSigmaPML();
-    MatrixXd ExpandToPML(const MatrixXd& M);
-    MatrixXd ExtractFromPML(const MatrixXd& M_pml);
+    MatrixXf ExpandToPML(const MatrixXf& M);
+    MatrixXf ExtractFromPML(const MatrixXf& M_pml);
 
     // Print
     void PrintInfo();

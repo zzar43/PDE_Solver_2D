@@ -2,14 +2,14 @@
 #include <iostream>
 #include <vector>
 
-using Eigen::VectorXd;
-using Eigen::MatrixXd;
+using Eigen::VectorXf;
+using Eigen::MatrixXf;
 
 // source function
 const double PI = atan(1.0)*4;
 
-VectorXd Gaussian1D(int Nx, double dx, double sigma, double center) {
-    VectorXd res(Nx);
+VectorXf Gaussian1D(int Nx, double dx, double sigma, double center) {
+    VectorXf res(Nx);
     for (int i = 0; i < Nx; i++)
     {
         double xi = dx * i;
@@ -18,8 +18,8 @@ VectorXd Gaussian1D(int Nx, double dx, double sigma, double center) {
     return res;
 }
 
-VectorXd Sine1D(int Nx, double dx, double omega) {
-    VectorXd res(Nx);
+VectorXf Sine1D(int Nx, double dx, double omega) {
+    VectorXf res(Nx);
     for (int i = 0; i < Nx; i++)
     {
         double xi = dx * i;
@@ -28,8 +28,8 @@ VectorXd Sine1D(int Nx, double dx, double omega) {
     return res;
 }
 
-MatrixXd Gaussian2D(int Nx, int Ny, double dx, double dy, double sigma_x, double sigma_y, double center_x, double center_y) {
-    MatrixXd G(Nx, Ny);
+MatrixXf Gaussian2D(int Nx, int Ny, double dx, double dy, double sigma_x, double sigma_y, double center_x, double center_y) {
+    MatrixXf G(Nx, Ny);
     double xi;
     double yi;
     for (int j = 0; j < Ny; j++)
@@ -58,10 +58,10 @@ PointSource2D::PointSource2D() : N(0) {
 
 PointSource2D::PointSource2D(uint16_t coor_x, uint16_t coor_y): N(1) {
     source_coor.push_back(Coor2D(coor_x, coor_y));
-    source_fn.push_back(VectorXd::Zero(1));
+    source_fn.push_back(VectorXf::Zero(1));
 }
 
-PointSource2D::PointSource2D(uint16_t coor_x, uint16_t coor_y, const VectorXd& fn): N(1) {
+PointSource2D::PointSource2D(uint16_t coor_x, uint16_t coor_y, const VectorXf& fn): N(1) {
     source_coor.push_back(Coor2D(coor_x, coor_y));
     source_fn.push_back(fn);
 }
@@ -72,11 +72,11 @@ PointSource2D::PointSource2D(const std::vector<Coor2D>& coor) : N(coor.size()) {
     for (int i = 0; i < coor.size(); i++)
     {
         source_coor.emplace_back(coor[i]);
-        source_fn.emplace_back(VectorXd::Zero(1));
+        source_fn.emplace_back(VectorXf::Zero(1));
     }
 }
 
-PointSource2D::PointSource2D(const std::vector<Coor2D>& coor, const VectorXd& fn) : N(coor.size()) {
+PointSource2D::PointSource2D(const std::vector<Coor2D>& coor, const VectorXf& fn) : N(coor.size()) {
     source_coor.reserve(N);
     source_fn.reserve(N);
     for (int i = 0; i < coor.size(); i++)
@@ -86,7 +86,7 @@ PointSource2D::PointSource2D(const std::vector<Coor2D>& coor, const VectorXd& fn
     }
 }
 
-PointSource2D::PointSource2D(const std::vector<Coor2D>& coor, const std::vector<VectorXd>& fn) : N(coor.size()) {
+PointSource2D::PointSource2D(const std::vector<Coor2D>& coor, const std::vector<VectorXf>& fn) : N(coor.size()) {
         source_coor.reserve(N);
         source_fn.reserve(N);
         for (int i = 0; i < coor.size(); i++)
@@ -112,7 +112,7 @@ uint16_t PointSource2D::GetSourceNum() {
 Coor2D PointSource2D::GetCoor(uint16_t source_idx) {
     return source_coor[source_idx];
 }
-VectorXd PointSource2D::GetFn(uint16_t source_idx) {
+VectorXf PointSource2D::GetFn(uint16_t source_idx) {
     return source_fn[source_idx];
 }
 double PointSource2D::GetValue(uint16_t source_idx, uint16_t time_idx) {

@@ -4,10 +4,10 @@
 ConvDiffEq2D::ConvDiffEq2D() {
     Record = false;
 
-    D = MatrixXd::Ones(Nx, Ny);
-    Vx = MatrixXd::Ones(Nx, Ny);
-    Vy = MatrixXd::Ones(Nx, Ny);
-    U_init = MatrixXd::Zero(Nx, Ny);
+    D = MatrixXf::Ones(Nx, Ny);
+    Vx = MatrixXf::Ones(Nx, Ny);
+    Vy = MatrixXf::Ones(Nx, Ny);
+    U_init = MatrixXf::Zero(Nx, Ny);
 
     source = PointSource2D();
 
@@ -20,13 +20,13 @@ ConvDiffEq2D::ConvDiffEq2D() {
 }
 
 // member functions
-void ConvDiffEq2D::SetParameters(const MatrixXd& set_D, const MatrixXd set_Vx, const MatrixXd set_Vy){
+void ConvDiffEq2D::SetParameters(const MatrixXf& set_D, const MatrixXf set_Vx, const MatrixXf set_Vy){
     D = set_D;
     Vx = set_Vx;
     Vy = set_Vy;
 }
 
-void ConvDiffEq2D::SetInit(const MatrixXd& set_U_init) {
+void ConvDiffEq2D::SetInit(const MatrixXf& set_U_init) {
     U_init = set_U_init;
 }
 
